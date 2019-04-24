@@ -1,7 +1,7 @@
 
 # Парсинг с помощью Python
 
-## Установка pip
+## Установка pip( для версии < 3.4 )
 
 > Идём на https://pip.pypa.io/en/stable/installing/ и скачиваем get-pip.py с помощью ПКМ "сохранить как..."
 > Вводим в консоли ```python get-pip.py```
