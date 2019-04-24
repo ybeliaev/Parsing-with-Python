@@ -13,4 +13,5 @@
 >* lxml: https://lxml.de/parsing.html
 
 ``` pip install requests beautifulsoup4 lxml ``` или ```python -m pip install requests beautifulsoup4 lxml ``` если первая инструкция не работает
-
+*Решение проблемы с pip:"
+*http://qaru.site/questions/54228/fatal-error-in-launcher-unable-to-create-process-using-cprogram-files-x86python33pythonexe-cprogram-files-x86python33pipexe*
