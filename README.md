@@ -8,9 +8,9 @@
 
 ## Установка библиотек
 
->Requests https://2.python-requests.org//en/master/
->Beautifulsoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
->lxml: https://lxml.de/parsing.html
+>* Requests https://2.python-requests.org//en/master/
+>* Beautifulsoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+>* lxml: https://lxml.de/parsing.html
 
 ``` pip install requests beautifulsoup4 lxml ```
 
