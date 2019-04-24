@@ -12,5 +12,5 @@
 >* Beautifulsoup: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 >* lxml: https://lxml.de/parsing.html
 
-``` pip install requests beautifulsoup4 lxml ```
+``` pip install requests beautifulsoup4 lxml ``` или ```python -m pip install requests beautifulsoup4 lxml ``` если первая инструкция не работает
 
