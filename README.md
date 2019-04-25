@@ -17,9 +17,9 @@
 *http://qaru.site/questions/54228/fatal-error-in-launcher-unable-to-create-process-using-cprogram-files-x86python33pythonexe-cprogram-files-x86python33pipexe*
 
 
-```
-// python code
-mport requests
+```python
+
+import requests
 from bs4 import BeautifulSoup
 
 
