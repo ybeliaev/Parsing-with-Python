@@ -16,7 +16,7 @@
 ### Решение проблемы с pip:
 *http://qaru.site/questions/54228/fatal-error-in-launcher-unable-to-create-process-using-cprogram-files-x86python33pythonexe-cprogram-files-x86python33pipexe*
 
-
+### получение содержимого тега h1 с wordpress.org
 ```python
 
 import requests
