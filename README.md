@@ -58,8 +58,11 @@ from bs4 import BeautifulSoup
 def get_html(url):
     r = requests.get(url)
     return r.text
-
-
+# функция для обработки строки ,получаемой в переменную rating( '1,470 total ratings')
+def refined(s):
+        r = s.split(' ')[0]
+        # убираем запятую из числа            
+        return r.replace(',' , '')    
 
 def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
@@ -68,9 +71,16 @@ def get_data(html):
     
     for plugin in plugins:
         name = plugin.find('h2').text
-        url = plugin.find('h2').find('a').get('href')        
-        print(url)
+        url = plugin.find('h2').find('a').get('href')
 
+        r = plugin.find('span', class_='rating-count').find('a').text
+        rating = refined(r)
+        print(rating)
+
+        # объединяем полученные данные для работы с csv
+        # создать словарь data
+        data = {''}
+        
 
 
 def main():
@@ -81,4 +91,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 ```
