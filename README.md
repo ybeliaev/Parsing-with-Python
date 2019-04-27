@@ -51,18 +51,36 @@ if __name__ == '__main__':
 ```python
 import requests
 from bs4 import BeautifulSoup
-# import csv
+import csv
 
 
 
 def get_html(url):
     r = requests.get(url)
     return r.text
+
 # функция для обработки строки ,получаемой в переменную rating( '1,470 total ratings')
 def refined(s):
         r = s.split(' ')[0]
         # убираем запятую из числа            
         return r.replace(',' , '')    
+
+# функция для обработки данных, полученных  в  словарь data (функции get_data) для -> csv
+def write_csv(data):
+        # with - контекстный менеджер
+        # если plugins.csv есть - open откроет его, если нет - создаст
+        # флаг "а" позволит добавлять данные, не стирая старые
+        # в f попадает открытый для записи файловый объект для записи plugins.csv
+        with open('plugins.csv', 'a') as f:
+                writer = csv.writer(f)
+
+                # writerow принимает только один аргумент -> чтобы впихнуть все данные создадим кортеж
+                writer.writerow((data['name'],
+                                 data['url'],
+                                 data['reviews']))
+       
+
+
 
 def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
@@ -79,10 +97,10 @@ def get_data(html):
 
         # объединяем полученные данные для работы с csv
         # создать словарь data
-         data = {'name': name, 'url': url, 'reviews': rating}
+        data = {'name': name, 'url': url, 'reviews': rating}
         
-        print(data)
-        
+        # print(data)
+        write_csv(data)
 
 
 def main():
