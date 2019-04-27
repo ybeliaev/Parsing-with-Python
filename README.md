@@ -79,7 +79,9 @@ def get_data(html):
 
         # объединяем полученные данные для работы с csv
         # создать словарь data
-        data = {''}
+         data = {'name': name, 'url': url, 'reviews': rating}
+        
+        print(data)
         
 
 
