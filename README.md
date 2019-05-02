@@ -47,7 +47,7 @@ if __name__ == '__main__':
 ```
 
 
-### получение содержимого атрибута ```href``` ссылки ```a``` с wordpress.org
+### получение содержимого атрибута ```href``` ссылки ```a``` с wordpress.org и запись в exel файл
 ```python
 import requests
 from bs4 import BeautifulSoup
@@ -113,3 +113,58 @@ if __name__ == '__main__':
     main()
 
 ```
+
+
+### получение данных с coinmarketcap.com и запись в exel файл
+```python
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+
+def get_html(url):
+    r = requests.get(url)
+    return r.text
+
+def write_csv(data):
+    with open('cmc.csv', 'a') as f:
+        writer = csv.writer(f)
+
+# в аргументы или кортеж или список. Выбираю список с всеми колонками, которые мне нужны с csv файле
+        writer.writerow([
+            data['name'],
+            data['symbol'],
+            data['url'],
+            data['price'],
+        ])
+
+def get_page_data(html):
+    soup = BeautifulSoup(html, 'lxml')
+    # trs - список всех строк элемента tr
+    trs = soup.find('table', id='currencies').find('tbody').find_all('tr')
+    for tr in trs:
+        tds = tr.find_all('td')
+        name = tds[1].find('a', class_='currency-name-container').text
+        symbol = tds[1].find('a').text # получение биржевых тиккеров
+        url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')# ссылки на внутренние страницы
+        price = tds[3].find('a').get('data-usd') # в data-usd цена в долларах
+
+        # упаковка данных в словарь
+        data = {
+            'name': name,
+            'symbol': symbol,
+            'url': url,
+            'price': price
+        }
+        # передаём данный словарь в функцию
+        write_csv(data)
+        print(price)
+    
+
+def main():
+    url = 'https://coinmarketcap.com/'
+    get_page_data(get_html(url))
+
+if __name__ == "__main__":
+    main()
+````
