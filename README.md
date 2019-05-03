@@ -168,3 +168,51 @@ def main():
 if __name__ == "__main__":
     main()
 ````
+
+### получение данных с учётом пагинации
+```pyton
+
+# -*- coding: utf-8 -*-
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+
+
+
+def get_html(url):
+    r = requests.get(url)
+    # 
+    # r.ok - сервер вернул код 200
+    if r.ok:
+        return r.text
+    print(r.status_code)# вернёт код ошибки
+
+def write_scv(data):
+    with open('rozetka.csv', 'a') as f:
+        writer = csv.writer(f)
+
+
+def get_page_data(html):
+    soup = BeautifulSoup(html, 'lxml')
+
+    lists = soup.find_all('div', class_='card-wrapper')
+    print(len(lists))
+
+    for div in lists:
+        # если какого то данного нет, то выбьет ошибку, для этого try cash
+        try:
+            name = div.find('b', class_="nc").text
+
+        except:
+            name = 'empty string'
+        print(name)
+
+def main():
+    url = 'https://27.ua/shop/odessa/bolty/?PAGEN_1=2'
+    get_page_data(get_html(url))
+
+
+if __name__ == "__main__":
+    main()
+```
