@@ -176,12 +176,9 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 
-
-
-
 def get_html(url):
     r = requests.get(url)
-    # 
+    
     # r.ok - сервер вернул код 200
     if r.ok:
         return r.text
