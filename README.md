@@ -171,7 +171,6 @@ if __name__ == "__main__":
 
 ### получение данных с учётом пагинации
 ```pyton
-
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
