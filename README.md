@@ -170,22 +170,32 @@ if __name__ == "__main__":
 ````
 
 ### получение данных с учётом пагинации
-```pyton
+```python
+# -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 import csv
 
+
+
+
 def get_html(url):
     r = requests.get(url)
-    
+    # 
     # r.ok - сервер вернул код 200
     if r.ok:
         return r.text
     print(r.status_code)# вернёт код ошибки
 
+# функция для работы с полученными ценами
+def refine_price(txt):
+    # 25.02���/����. - полученные данные на входе
+    pass
+
+
 def write_scv(data):
-    with open('rozetka.csv', 'a') as f:
+    with open('odessa.csv', 'a') as f:
         writer = csv.writer(f)
 
 
@@ -202,7 +212,16 @@ def get_page_data(html):
 
         except:
             name = 'empty string'
-        print(name)
+        try:
+            url = 'https://27.ua' + div.find('a', class_='card__photo').get('href')
+        except:
+            url = ''
+        try:
+            price = div.find('span', class_='card__price-sum').text.strip()
+            # метод strip() убирает /n /t ...
+            print(price)
+        except:
+            price = ''
 
 def main():
     url = 'https://27.ua/shop/odessa/bolty/?PAGEN_1=2'
