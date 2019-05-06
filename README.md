@@ -172,7 +172,7 @@ if __name__ == "__main__":
 ### получение данных с учётом пагинации
 ```python
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
+
 import requests
 from bs4 import BeautifulSoup
 import csv
