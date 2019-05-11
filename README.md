@@ -169,16 +169,12 @@ if __name__ == "__main__":
     main()
 ````
 
-### получение данных с учётом пагинации
+### получение данных с учётом пагинации путём цикла
 ```python
 # -*- coding: utf-8 -*-
-
 import requests
 from bs4 import BeautifulSoup
 import csv
-
-
-
 
 def get_html(url):
     r = requests.get(url)
@@ -197,6 +193,11 @@ def refine_price(txt):
 def write_scv(data):
     with open('odessa.csv', 'a') as f:
         writer = csv.writer(f)
+        writer.writerow(( # кортеж
+            data['name'],
+            data['url'],
+            data['price']
+        ))
 
 
 def get_page_data(html):
@@ -219,13 +220,24 @@ def get_page_data(html):
         try:
             price = div.find('span', class_='card__price-sum').text.strip()
             # метод strip() убирает /n /t ...
-            print(price)
+            
         except:
             price = ''
-
+        data = {
+            'name': name,
+            'url' : url,
+            'price': price
+        }
+        write_scv(data)
+# заметим, что первая страница открывается как с https:...bolty/ так и /bolty/?PAGEN_1=1, вторая с /bolty/?PAGEN_1=2
 def main():
-    url = 'https://27.ua/shop/odessa/bolty/?PAGEN_1=2'
-    get_page_data(get_html(url))
+    pattern = 'https://27.ua/shop/odessa/bolty/?PAGEN_1={}'
+    for i in range(1, 3):
+        url = pattern.format(str(i)) # str приводит число к строке
+        print(url) 
+        # https://27.ua/shop/odessa/bolty/?PAGEN_1=1
+        # https://27.ua/shop/odessa/bolty/?PAGEN_1=2
+        get_page_data(get_html(url))
 
 
 if __name__ == "__main__":
