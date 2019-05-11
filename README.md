@@ -250,5 +250,73 @@ if __name__ == "__main__":
 ### получение данных с учётом пагинации с использованием while
 
 ```python
+import requests
+from bs4 import BeautifulSoup
+import csv
+import re
 
+
+def get_html(url):
+    r = requests.get(url)
+    if r.ok:
+        return r.text
+    print(r.status_code)
+
+def write_csv(data):
+    with open('coin_pages.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow((
+            data['name'],
+            data['url'],
+            data['price']
+        ))
+
+def get_page_data(html):
+    soup = BeautifulSoup(html, 'lxml')
+
+    tr_list = soup.find('table', id='currencies').find('tbody').find_all('tr')
+    for tr in tr_list:
+        td_list = tr.find_all('td')
+
+        try:
+            name = td_list[1].find('a', class_='currency-name-container').text.strip()
+        except:
+            name = ''
+        try:
+            url = 'https://coinmarketcap.com' + td_list[1].find('a', class_='currency-name-container').get('href')
+        except:
+            url = ''
+        try:
+            price = td_list[3].find('a').get('data-usd').strip()
+        except:
+            price = ''
+        
+        data = {
+            'name' : name,
+            'url'  : url,
+            'price': price
+        }
+        write_csv(data)
+
+
+
+# <a href="2">Next 100</a> так выглядит ссылка пагинации
+# НО на следующей странице ссылка для перехода будет уже не на том месте.
+# Поэтому мы зацепимся за слово NEXT и испол. регулярные выражения
+def main():
+    url = 'https://coinmarketcap.com/'
+
+    while True:
+        get_page_data(get_html(url))
+
+        soup = BeautifulSoup(get_html(url), 'lxml')
+
+        try:
+            pattern = 'Next'
+            url = 'https://coinmarketcap.com/' + soup.find('ul', class_='pagination').find('a', text=re.compile(pattern)).get('href')
+        except:
+            break # когда не будет ссылки - пагинация закончится, то выход из цикла
+
+if __name__ == "__main__":
+    main()
 ```
