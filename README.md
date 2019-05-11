@@ -304,7 +304,7 @@ def get_page_data(html):
 # НО на следующей странице ссылка для перехода будет уже не на том месте.
 # Поэтому мы зацепимся за слово NEXT и испол. регулярные выражения
 def main():
-    url = 'https://coinmarketcap.com/'
+    url = 'https://coinmarketcap.com/' # эту url переопределим в блоке try
 
     while True:
         get_page_data(get_html(url))
