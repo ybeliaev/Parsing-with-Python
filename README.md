@@ -176,6 +176,9 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 
+
+
+
 def get_html(url):
     r = requests.get(url)
     # 
@@ -186,8 +189,8 @@ def get_html(url):
 
 # функция для работы с полученными ценами
 def refine_price(txt):
-    # 25.02���/����. - полученные данные на входе
-    pass
+    # 25.02грн/шт. - полученные данные на входе, на выходе будут 25.02
+    return txt.split('г')[0]
 
 
 def write_scv(data):
@@ -218,7 +221,8 @@ def get_page_data(html):
         except:
             url = ''
         try:
-            price = div.find('span', class_='card__price-sum').text.strip()
+            p = div.find('span', class_='card__price-sum').text.strip() # -> 20.4грн
+            price = refine_price(p)  # -> 20.4 но почему то не все данные адекватны - есть пустоты, нужно разобраться
             # метод strip() убирает /n /t ...
             
         except:
