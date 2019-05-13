@@ -376,6 +376,20 @@ if __name__ == "__main__":
 ### Чтение из файла
 
 ```
+import csv
+# ПРИМЕР ЧТЕНИЯ ИЗ ФАЙЛА
 
+def main():
+    
+    with open('cmc.csv') as file:
+        # укажу нужные имена ключей ,иначе названия формируются кто знает как
+        keyNames = ['name', 'url', 'price']
+        reader = csv.DictReader(file, fieldnames=keyNames)
+        # в cmc.csv список строк - нужно каждую строку отдельно прочитать
+        for row in reader:
+            print(row)
+
+if __name__ == "__main__":
+    main()
 
 ```
