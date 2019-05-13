@@ -320,3 +320,56 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+### Два способа записи в файл
+
+```python
+import csv
+# write_csv2 и write_csv - примеры функций записи данных в файл
+# 
+def write_csv2(data):
+    # with - контекстный менеджер
+    # as file - сохранение открытого файлового объекта в переменную file
+    with open('names.csv', 'a') as file:
+        # delimiter укажет знак разграничивающий столбцы в csv файле
+        # по умолчанию delimiter=',' поэтому ниже второй аргумент можно не писать
+        writer = csv.writer(file, delimiter=',')
+        writer.writerow((
+            data['name'],
+            data['surname'],
+            data['age']
+        ))
+# в write_csv(data) мы указвали какие ключи словаря в каком порядке хочу записать - data['name'], data['surname'],data['age']
+# в write_csv2 использую список, а не словарь - список сохр. порядок
+def write_csv2(data):
+    with open('names_2.csv', 'a') as file:
+        # order будет определять последовательность записи в словарь
+        order = ['name', 'surname', 'age']
+        writer = csv.DictWriter(file, fieldnames=order)
+        writer.writerow(data)
+
+def main():
+    d = {
+        'name': 'Yura',
+        'surname': 'Beloff',
+        'age': 44
+    }
+    d1 = {
+        'name': 'Marry',
+        'surname': 'Henson',
+        'age': 23
+    }
+    d2 = {
+        'name': 'Nick',
+        'surname': 'Jorck',
+        'age': 40
+    }
+    # упакую словари в список для удобной работы в цикле
+    l = [ d, d1, d2]
+
+    for i in l:
+        write_csv2(i)
+
+if __name__ == "__main__":
+    main()
+
+```
