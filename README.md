@@ -58,9 +58,45 @@ def main():
 if __name__ == '__main__':
     main()
 
+```
+### Фильтрация данных
 
+```python
+from bs4 import BeautifulSoup
+
+# Создание фильтра для получения элемента <div id="whois">Copywriter</div>
+# 1. Функция get_copywriter(tag) вернёт тег в котором есть нужный текст
+# 2. Создаю список найденных тегов copywriters = []
+# 3. В цикле for перебираю persons и copywriters.append(cw) где cw - элемент тега.
+#  В данном случае это будет список 'div'-ов с  class='row' в котором есть 'div' с текстом 'Copywriter'
+def get_copywriter(tag):
+    # получаем вначале div с id='whois' 
+    whois = tag.find('div', id='whois').text.strip()
+    if 'Copywriter' in whois:
+        return tag
+    return None
+
+
+def main():
+    file = open('index.html').read()
+    soup = BeautifulSoup(file, 'lxml')    
+    
+    copywriters = []
+    
+    persons = soup.find_all('div', class_='row')
+    for person in persons:
+        cw = get_copywriter(person)
+        if cw:
+            copywriters.append(cw)
+    
+    print(copywriters)
+    
+
+if __name__ == '__main__':
+    main()
 
 ```
+
 
 ### получение содержимого тега h1 с wordpress.org
 ```python
