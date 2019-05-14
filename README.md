@@ -16,6 +16,52 @@
 ### Решение проблемы с pip:
 *http://qaru.site/questions/54228/fatal-error-in-launcher-unable-to-create-process-using-cprogram-files-x86python33pythonexe-cprogram-files-x86python33pipexe*
 
+### Методы и свойства BeautifulSoup
+
+```python
+from bs4 import BeautifulSoup
+import re
+# библиотеку requests не импортирую т.к запросов к серверу нет - файл получен локально
+
+# .find() -> возвращает первый попавшийся объект
+# ********************************************
+
+# .find_all('div', class_='row') или .find_all('div', {'class':'row'}) -> 
+# возвращает список объектов( [1,2,3] )
+# второй вариант удобен при составных атрибутах .find_all('div', {'data-set':'salary'})
+# ********************************************
+
+# .parent -> свойство для поиска СНИЗУ ВВЕРХ, даст содержимое всего родителя( см. код alena ниже )
+# ********************************************
+
+# .find_parent(class_='row') -> найдёт родителя с заданным параметром
+#  независимо от глубины вложенности элемента, к которому применяю метод
+# ********************************************
+
+# .parents -> вернёт ВСЕХ родителей. Ненужное свойство.
+# .find_parents() -> похоже что выше
+# ********************************************
+# .find_next_sibling() -> как find но движение между соседними тегами общих родителей
+# .find_previous_sibling() -> см. выше
+
+
+def main():
+    file = open('index.html').read()
+    soup = BeautifulSoup(file, 'lxml')
+    # row = soup.find_all('div', {'data-set': 'salary'})
+    
+    alena = soup.find('div', text='Alena').find_parent(class_='row')
+    print(alena) # получю весь РОДИТЕЛЬСКИЙ контейнер
+
+    
+    
+if __name__ == '__main__':
+    main()
+
+
+
+```
+
 ### получение содержимого тега h1 с wordpress.org
 ```python
 
