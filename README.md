@@ -522,3 +522,8 @@ if __name__ == "__main__":
     main()
 
 ```
+### Загрузка полученных данных в базу Postgresql
+
+* Для начала скачать https://www.postgresql.org/download/windows/
+* Можно пользоваьтся Open Server
+
